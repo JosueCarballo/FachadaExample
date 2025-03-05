@@ -1,0 +1,94 @@
+openapi: 3.0.0
+info:
+  title: API de Mascotas
+  description: API para gestionar mascotas en una base de datos MySQL
+  version: 1.0.0
+servers:
+  - url: http://127.0.0.1:5000/
+    description: Servidor Local
+
+paths:
+  /mascotas:
+    get:
+      summary: Obtener todas las mascotas
+      responses:
+        '200':
+          description: Lista de mascotas
+    post:
+      summary: Agregar una nueva mascota
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: "Firulais"
+                tipo:
+                  type: string
+                  example: "Perro"
+                edad:
+                  type: integer
+                  example: 3
+      responses:
+        '201':
+          description: Mascota agregada
+
+  /mascotas/{id}:
+    get:
+      summary: Obtener una mascota por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Datos de la mascota
+        '404':
+          description: Mascota no encontrada
+    put:
+      summary: Actualizar una mascota
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: "Max"
+                tipo:
+                  type: string
+                  example: "Gato"
+                edad:
+                  type: integer
+                  example: 5
+      responses:
+        '200':
+          description: Mascota actualizada correctamente
+        '404':
+          description: Mascota no encontrada
+    delete:
+      summary: Eliminar una mascota
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Mascota eliminada correctamente
+        '404':
+          description: Mascota no encontrada
